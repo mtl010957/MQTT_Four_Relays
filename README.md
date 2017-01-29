@@ -12,8 +12,8 @@ state of each of the relays on relay/1/+/state
 
 The configuration of the WiFi connection and the MQTT server are
 setup by connecting to an access point the ESP8266 creates on first
-startup or when forced by holding the flash button and pressing
-then releasing the reset button. More details on how this works are
+startup or when forced by holding the flash button for 5 seconds or so then releasing it.
+More details on how this works are
 documented in the example code for the WiFIManager library at:
 https://github.com/tzapu/WiFiManager
 
