@@ -10,6 +10,13 @@ the '+' is the relay number given by a single digit 1- 4 for 'on'
 and 'off' commands. Every 60 seconds, it will publish the current
 state of each of the relays on relay/1/+/state
 
-based on example by
+The configuration of the WiFi connection and the MQTT server are
+setup by connecting to an access point the ESP8266 creates on first
+startup or when forced by holding the flash button and pressing
+then releasing the reset button. More details on how this works are
+documented in the example code for the WiFIManager library at:
+https://github.com/tzapu/WiFiManager
+
+originally based on example by
 Dimitar Manovski
 support@smart-republic.com
