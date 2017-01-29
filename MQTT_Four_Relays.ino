@@ -31,7 +31,7 @@
 
 //define your default values here, if there are different values in config.json, they are overwritten.
 char client_name[40] = "ESP8266Client_relay_1";
-char mqtt_server[40] = "mtl-svn.dyndns-home.com";
+char mqtt_server[40] = "";
 char mqtt_port[6] = "1883";
 char mqtt_user[40] = "";
 char mqtt_password[40] = "";
@@ -132,7 +132,14 @@ void setup() {
   digitalWrite(red_led, HIGH);  
   digitalWrite(blue_led, HIGH);  
   Serial.begin(115200);
-  setup_wifi(false);
+  // If the trigger pin is held during setup we will force a WiFi configuration
+  // setup instead of using the stored values
+  if ( digitalRead(TRIGGER_PIN) == LOW ) {
+    setup_wifi(true);
+  } else {
+    setup_wifi(false);
+  }
+
 //  client.setServer(mqtt_server, 1883);
   client.setCallback(callback);
   // initialize relay pins.
@@ -318,6 +325,12 @@ void reconnect() {
       delay(200);
       blink_red();
       delay(4760);
+      // If the trigger pin is held this will get us out of a MQTT reconnect loop
+      // to set new MQTT information in case the WiFi connection info is good
+      // but the MQTT setup needs to be changed
+      if ( digitalRead(TRIGGER_PIN) == LOW ) {
+        setup_wifi(true);
+      }
     }
   }
 }
@@ -325,6 +338,7 @@ void reconnect() {
 int tellstate = 0;
 
 void loop() {
+  // If the trigger pin is held we'll force a new WiFi and MQTT setup cycle
   if ( digitalRead(TRIGGER_PIN) == LOW ) {
     setup_wifi(true);
   }
