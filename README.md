@@ -2,8 +2,15 @@
 This code switches four relays on a module connected to an ESP8266.
 
 The relay module used was a Sainsmart 4-Channel 5V Relay Module for
-PIC ARM AVR DSP Arduino MSP430 TTL Logic. The ESP8266 module was a 
-Adafruit HUZZAH ESP8266 breakout.
+PIC ARM AVR DSP Arduino MSP430 TTL Logic. The ESP8266 module was an 
+Adafruit HUZZAH ESP8266 breakout. The Sainsmart relay module is designed
+5V operation, but the ESP8266 outputs can only handle the 3.3V level
+used to power it. The relay module does have the option to separate the
+control Vcc from the relay coil supply so wire it up with the 3.3V
+output from the ESP8266 supplying that Vcc. Some relay modules may
+require slightly more pull-in current in this case so if your relays
+don't pull in you may have to replace the pull-up resistors with a
+slightly smaller value.
  
 It will connect to MQTT and listens on topic relay/1/+/set where
 the '+' is the relay number given by a single digit 1- 4 for 'on'
